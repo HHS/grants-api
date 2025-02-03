@@ -37,9 +37,16 @@ export function requesterForEndpoint<ResponseType extends APIResponse>({
       queryParamData?: QueryParamData; // only used for error handling purposes
       body?: JSONRequestBody;
       additionalHeaders?: HeadersDict;
+      nextOptions?: NextFetchRequestConfig;
     } = {},
   ): Promise<ResponseType> {
-    const { additionalHeaders = {}, body, queryParamData, subPath } = options;
+    const {
+      additionalHeaders = {},
+      body,
+      queryParamData,
+      subPath,
+      nextOptions,
+    } = options;
     const url = createRequestUrl(
       method,
       basePath,
@@ -59,6 +66,7 @@ export function requesterForEndpoint<ResponseType extends APIResponse>({
         body: method === "GET" || !body ? null : createRequestBody(body),
         headers,
         method,
+        next: nextOptions,
       },
       queryParamData,
     );
