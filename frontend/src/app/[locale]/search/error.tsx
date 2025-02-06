@@ -67,7 +67,7 @@ export default function SearchError({ error, reset }: ErrorProps) {
     ) {
       reset();
     }
-  }, [searchParams, reset]);
+  }, [searchParams, reset, previousSearchParams]);
 
   useEffect(() => {
     console.error(error);

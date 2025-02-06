@@ -1,3 +1,4 @@
+import { readError } from "src/errors";
 import { getSession } from "src/services/auth/session";
 import { deleteSession } from "src/services/auth/sessionUtils";
 import { postLogout } from "src/services/fetch/fetchers/userFetcher";
@@ -17,10 +18,10 @@ export async function POST() {
     await deleteSession();
     return Response.json({ message: "logout success" });
   } catch (e) {
-    const error = e as Error;
+    const { message, status } = readError(e as Error, 500);
     return Response.json(
-      { message: `Error logging out: ${error.message}` },
-      { status: 500 },
+      { message: `Error logging out: ${message}` },
+      { status },
     );
   }
 }
